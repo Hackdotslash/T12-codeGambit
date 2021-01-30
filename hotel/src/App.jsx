@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Signup from './components/Signup';
 import Signin from './components/Signin';
-import Dashboard from './components/Dashboard';
 import { AuthProvider } from "./components/context/AuthContext";
 import './App.css';
 import Overview from './components/Overview';
@@ -15,7 +14,6 @@ function App() {
           <Switch>
             <Route path="/signup" component={Signup} />
             <Route path="/signin" component={Signin} />
-            <Route path="/dashboard" component={Dashboard} />
             <Route path="/dashboard/overview" component={Overview} />
           </Switch>
         </AuthProvider>

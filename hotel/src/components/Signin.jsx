@@ -72,7 +72,7 @@ export default function Signin(props) {
       auth
         .signInWithEmailAndPassword(email.current.value, password.current.value)
         .then(async (cred) => {
-          props.history.push("/dashboard");
+          props.history.push("/dashboard/overview");
         });
     } catch (err) {
       seterror(err);
