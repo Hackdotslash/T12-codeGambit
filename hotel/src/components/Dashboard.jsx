@@ -115,7 +115,7 @@ function Dashboard({ children, location: { pathname } }) {
         </List>
         <Divider />
         <MenuList style={{ padding: '5px' }}>
-          <MenuItem component={Link} to="/admin/dashboard/overview" style={currentTab(pathname, "/admin/dashboard/overview")}>
+          <MenuItem component={Link} to="/dashboard/overview" style={currentTab(pathname, "/dashboard/overview")}>
             <DashboardIcon />
             <Typography variant="subtitle1" style={{ marginLeft: '15px' }}>Overview</Typography>
           </MenuItem>
