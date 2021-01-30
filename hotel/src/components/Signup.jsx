@@ -1,12 +1,14 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "./context/AuthContext";
 import { TextField, Paper, InputAdornment, CssBaseline, Typography, Button, Grid, Container, makeStyles } from "@material-ui/core";
-import bk from "./images/bk1.png";
 import LockIcon from "@material-ui/icons/Lock";
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
+
+import { useAuth } from "./context/AuthContext";
+import bk from "./images/bk1.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,6 +64,7 @@ export default function Signup(props) {
   const email = useRef();
   const password = useRef();
   const name = useRef();
+  const gstn = useRef();
   const { signup } = useAuth();
   const [busy, setBusy] = React.useState(false);
   const [error, seterror] = React.useState("");
@@ -71,7 +74,7 @@ export default function Signup(props) {
     try {
       seterror("");
       setBusy(true);
-      signup(email.current.value, password.current.value, name.current.value);
+      signup(email.current.value, password.current.value, name.current.value, gstn.current.value);
       props.history.push("/signin");
     } catch (err) {
       seterror(err);
@@ -93,7 +96,6 @@ export default function Signup(props) {
               id="Name"
               label="Name"
               inputRef={name}
-              autoComplete="name"
               autoFocus
               InputProps={{
                 startAdornment: (
@@ -108,11 +110,25 @@ export default function Signup(props) {
               margin="normal"
               required
               fullWidth
+              id="Name"
+              label="GST Number"
+              inputRef={gstn}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <ConfirmationNumberIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
               id="email"
               label="Email Address"
               inputRef={email}
-              autoComplete="email"
-              autoFocus
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -215,4 +231,3 @@ export default function Signup(props) {
     </div>
   );
 }
-// style={{background: "linear-gradient(243.18deg, rgba(9, 1, 57, 0.3224) 0%, rgba(5, 255, 0, 0.1456) 100%)";}}

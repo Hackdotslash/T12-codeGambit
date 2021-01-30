@@ -13,13 +13,13 @@ export function AuthProvider({ children }) {
 
     const [loading, setloading] = useState(true);
 
-    function signup(email, password, name) {
+    function signup(email, password, name, gstn) {
         auth
             .createUserWithEmailAndPassword(email, password)
             .then((cred) => {
-                return db.collection("users").doc(cred.user.uid).set({
+                return db.collection("hotels").doc(cred.user.uid).set({
                     name: name,
-                    role: 0,
+                    gstn: gstn,
                 });
             })
             .catch(function (err) {
@@ -29,29 +29,7 @@ export function AuthProvider({ children }) {
 
     function signin(email, password) {
         return auth
-            .signInWithEmailAndPassword(email, password)
-            .then(async (cred) => {
-                await db
-                    .collection("users")
-                    .doc(cred.user.uid)
-                    .get()
-                    .then((doc) => {
-                        var role = doc.data().role;
-                        if (role === 1) {
-                            console.log("ADMIN");
-                            return <Redirect to="/admin/dashboard" />;
-                        } else {
-                            console.log("USER");
-                            return <Redirect to="/user/dashboard" />;
-                        }
-                    });
-                /*.catch((err) => {
-                    console.error("ROLE ERROR", err);
-                  });*/
-            })
-            .catch((err) => {
-                console.error("SIGNIN ERROR", err);
-            });
+            .signInWithEmailAndPassword(email, password);
     }
 
     function logout() {
