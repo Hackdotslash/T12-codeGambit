@@ -4,7 +4,7 @@ import Dashboard from './Dashboard';
 function Overview() {
     return (
         <Dashboard>
-            <h2>Overview</h2>
+            <h2>Overview Test</h2>
         </Dashboard>
     )
 }
