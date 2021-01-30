@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'search.dart';
+import '../../search.dart';
 
 
 class LoginPage extends StatefulWidget {
