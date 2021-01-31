@@ -29,7 +29,7 @@ function Overview() {
         </Grid>
 
         <Grid container spacing={5}>
-          <Grid item xs={9}>
+          <Grid item xs>
             <RequestsCard />
           </Grid>
         </Grid>
