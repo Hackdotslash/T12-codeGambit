@@ -11,6 +11,7 @@ class WelcomeScreen extends StatelessWidget {
       ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             FlatButton(
               child: Text('REGISTER'),
