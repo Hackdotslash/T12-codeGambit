@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
@@ -11,7 +11,7 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import { db, app } from "../../firebase.js";
+import { db } from "../../firebase.js";
 
 const useStyles = makeStyles({
   root: {
@@ -63,6 +63,7 @@ const listOfRequests = [
 function RequestsCard() {
   const classes = useStyles();
   const [list, setList] = React.useState(listOfRequests);
+  const [guest, setGuest] = React.useState([]);
 
   const handleAcceptRequest = (index) => {
     let newRequestList = [...list];
@@ -74,6 +75,24 @@ function RequestsCard() {
     newRequestList.splice(index, 1);
     setList(newRequestList);
   };
+  async function loadData() {
+    await db.collection('bookings').onSnapshot((snap) => {
+      if (snap.size) {
+        let mylist = [];
+        snap.forEach((doc) => {
+          if (doc.data().status === 'pending') {
+            mylist.push({ ...doc.data() });
+          }
+        })
+        setGuest(mylist);
+      }
+    })
+  };
+
+  useEffect(() => {
+    loadData();
+    console.log(guest);
+  }, [])
 
   return (
     <Card>
@@ -82,7 +101,7 @@ function RequestsCard() {
           List of Requests
         </Typography>
         <div id="add-to-accordian">
-          {list.map((request, index) => {
+          {guest && guest.map((request, index) => {
             return (
               <Accordion>
                 <AccordionSummary
@@ -101,7 +120,7 @@ function RequestsCard() {
                           style={{ textAlign: "center" }}
                         >
                           <Grid item xs>
-                            <Typography>Guest Name: {request.name}</Typography>
+                            <Typography>Guest Name: {request.guestName}</Typography>
                           </Grid>
                         </Grid>
                       </Grid>
@@ -139,13 +158,13 @@ function RequestsCard() {
                       <strong>Check Out: </strong> {request.checkout}
                     </Typography>
                     <Typography>
-                      <strong>Current City:</strong> {request.city}
+                      <strong>Current City:</strong> {request.currentCity}
                     </Typography>
                     <Typography>
                       <strong>Age: </strong> {request.age}
                     </Typography>
                     <Typography>
-                      <strong>Contact No.: </strong> {request.contact}
+                      <strong>Contact No.: </strong> {request.contactNum}
                     </Typography>
                   </Container>
                 </AccordionDetails>
