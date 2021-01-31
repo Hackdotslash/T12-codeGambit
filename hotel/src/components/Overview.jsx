@@ -18,7 +18,6 @@ function Overview() {
 
   return (
     <Dashboard>
-      <h2>Overview</h2>
       <Grid>
         <Grid container spacing={5}>
           <Grid item xs>

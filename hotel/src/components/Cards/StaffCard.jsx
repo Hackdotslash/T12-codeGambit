@@ -10,7 +10,7 @@ import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 275,
+    minHeight: 200,
   },
   title: {
     fontSize: 24,
@@ -22,59 +22,64 @@ const useStyles = makeStyles({
   actions: {
     alignItems: "center",
   },
+  staffcon: {
+    margin: 5,
+    padding: 5,
+    fontSize: 16,
+  },
 });
 
 function StaffCard() {
   const classes = useStyles();
 
   return (
-    <Card>
+    <Card className={classes.root}>
       <CardContent>
         <Typography
           className={classes.title}
           color="textSecondary"
           gutterBottom
         >
-          Staff
+          Staff Members
         </Typography>
 
         <Grid>
           <Grid container spacing={2}>
             <Grid item xs>
-              <Container>
+              <Container className={classes.staffcon}>
                 <AssignmentIndIcon />
-                <div> Staff </div>
+                <div> Himesh </div>
               </Container>
             </Grid>
             <Grid item xs>
-              <Container>
+              <Container className={classes.staffcon}>
                 <AssignmentIndIcon />
-                <div> Staff </div>
+                <div> Rajesh </div>
               </Container>
             </Grid>
             <Grid item xs>
-              <Container>
+              <Container className={classes.staffcon}>
                 <AssignmentIndIcon />
-                <div> Staff </div>
+                <div> Raj </div>
               </Container>
             </Grid>
             <Grid item xs>
-              <Container>
+              <Container className={classes.staffcon}>
                 <AssignmentIndIcon />
-                <div> Staff </div>
+                <div> Avni </div>
               </Container>
             </Grid>
             <Grid item xs>
-              <Container>
+              <Container className={classes.staffcon}>
                 <AssignmentIndIcon />
-                <div> Staff </div>
+                <div> Hema </div>
               </Container>
             </Grid>
           </Grid>
         </Grid>
       </CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
+      <CardActions className={classes.actions}>
+        <Button size="small">Add More</Button>
       </CardActions>
     </Card>
   );

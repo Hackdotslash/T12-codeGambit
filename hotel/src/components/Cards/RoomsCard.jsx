@@ -10,7 +10,7 @@ import { Grid } from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 275,
+    minHeight: 200,
   },
   title: {
     fontSize: 24,
@@ -65,7 +65,7 @@ function RoomsCard() {
         </Grid>
       </CardContent>
       <CardActions className={classes.actions}>
-        <Button size="small">Learn More</Button>
+        <Button size="small">Show More</Button>
       </CardActions>
     </Card>
   );
