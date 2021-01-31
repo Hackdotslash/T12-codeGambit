@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Signup from './components/Signup';
-import Signin from './components/Signin';
+import Signup from "./components/Signup";
+import Signin from "./components/Signin";
 import { AuthProvider } from "./components/context/AuthContext";
-import './App.css';
-import Overview from './components/Overview';
-import Profile from './components/Profile';
+import "./App.css";
+import Overview from "./components/Overview";
+import GuestsList from "./components/GuestsList";
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
             <Route path="/signup" component={Signup} />
             <Route path="/signin" component={Signin} />
             <Route path="/dashboard/overview" exact component={Overview} />
-            <Route path="/dashboard/profile" exact component={Profile} />
+            <Route path="/dashboard/guests" exact component={GuestsList} />
           </Switch>
         </AuthProvider>
       </Router>

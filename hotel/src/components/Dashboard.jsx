@@ -148,18 +148,8 @@ function Dashboard({ children, location: { pathname } }) {
           </MenuItem>
           <MenuItem
             component={Link}
-            to="/dashboard/profile"
-            style={currentTab(pathname, "/dashboard/profile")}
-          >
-            <AddBoxIcon />
-            <Typography variant="subtitle1" style={{ marginLeft: "15px" }}>
-              Update Profile
-            </Typography>
-          </MenuItem>
-          <MenuItem
-            component={Link}
-            to="/admin/dashboard/test/edit"
-            style={currentTab(pathname, "/admin/dashboard/test/edit")}
+            to="/dashboard/guests"
+            style={currentTab(pathname, "/dashboard/guests")}
           >
             <EditIcon />
             <Typography variant="subtitle1" style={{ marginLeft: "15px" }}>
