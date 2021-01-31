@@ -11,6 +11,7 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import { db, app } from "../../firebase.js";
 
 const useStyles = makeStyles({
   root: {
@@ -40,21 +41,39 @@ const useStyles = makeStyles({
   },
 });
 
-const listOfRequests = {
-  name: "ABC XYZ",
-  city: "Surat",
-  checkin: "123",
-  checkout: "234",
-  age: "34",
-  contact: "123445",
-};
+const listOfRequests = [
+  {
+    name: "ABC XYZ",
+    city: "Surat",
+    checkin: "123",
+    checkout: "234",
+    age: "34",
+    contact: "123445",
+  },
+  {
+    name: "ABC XYZ",
+    city: "Surat",
+    checkin: "123",
+    checkout: "234",
+    age: "34",
+    contact: "123445",
+  },
+];
 
 function RequestsCard() {
   const classes = useStyles();
   const [list, setList] = React.useState(listOfRequests);
 
-  const handleAcceptRequest = () => {};
-  const handleRejectRequest = () => {};
+  const handleAcceptRequest = (index) => {
+    let newRequestList = [...list];
+    newRequestList.splice(index, 1);
+    setList(newRequestList);
+  };
+  const handleRejectRequest = (index) => {
+    let newRequestList = [...list];
+    newRequestList.splice(index, 1);
+    setList(newRequestList);
+  };
 
   return (
     <Card>
@@ -63,68 +82,76 @@ function RequestsCard() {
           List of Requests
         </Typography>
         <div id="add-to-accordian">
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-label="Expand"
-              aria-controls="additional-actions1-content"
-              id="additional-actions1-header"
-            >
-              <AccountCircleIcon fontSize="large" />
-              <Container className={classes.mainRequestCont}>
-                <Container className={classes.requestSummary}>
-                  <Grid>
-                    <Grid container spacing={2} style={{ textAlign: "center" }}>
-                      <Grid item xs>
-                        <Typography>Guest Name: ABC XYZ</Typography>
+          {list.map((request, index) => {
+            return (
+              <Accordion>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-label="Expand"
+                  aria-controls="additional-actions1-content"
+                  id="additional-actions1-header"
+                >
+                  <AccountCircleIcon fontSize="large" />
+                  <Container className={classes.mainRequestCont}>
+                    <Container className={classes.requestSummary}>
+                      <Grid>
+                        <Grid
+                          container
+                          spacing={2}
+                          style={{ textAlign: "center" }}
+                        >
+                          <Grid item xs>
+                            <Typography>Guest Name: {request.name}</Typography>
+                          </Grid>
+                        </Grid>
                       </Grid>
-                    </Grid>
-                  </Grid>
-                </Container>
-                <Container className={classes.requestSummaryButtons}>
-                  <ButtonGroup>
-                    <Button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleAcceptRequest();
-                      }}
-                      color="primary"
-                    >
-                      Accept
-                    </Button>
-                    <Button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleRejectRequest();
-                      }}
-                      color="secondary"
-                    >
-                      Reject
-                    </Button>
-                  </ButtonGroup>
-                </Container>
-              </Container>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Container>
-                <Typography>
-                  <strong>Check in: </strong> 21/1/2021 - 3PM
-                </Typography>
-                <Typography>
-                  <strong>Check Out: </strong> 24/1/2021 - 3PM
-                </Typography>
-                <Typography>
-                  <strong>Current City:</strong> Surat
-                </Typography>
-                <Typography>
-                  <strong>Age: </strong> 34
-                </Typography>
-                <Typography>
-                  <strong>Contact No.: </strong> 9876543210
-                </Typography>
-              </Container>
-            </AccordionDetails>
-          </Accordion>
+                    </Container>
+                    <Container className={classes.requestSummaryButtons}>
+                      <ButtonGroup>
+                        <Button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleAcceptRequest(index);
+                          }}
+                          color="primary"
+                        >
+                          Accept
+                        </Button>
+                        <Button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleRejectRequest(index);
+                          }}
+                          color="secondary"
+                        >
+                          Reject
+                        </Button>
+                      </ButtonGroup>
+                    </Container>
+                  </Container>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Container>
+                    <Typography>
+                      <strong>Check in: </strong> {request.checkin}
+                    </Typography>
+                    <Typography>
+                      <strong>Check Out: </strong> {request.checkout}
+                    </Typography>
+                    <Typography>
+                      <strong>Current City:</strong> {request.city}
+                    </Typography>
+                    <Typography>
+                      <strong>Age: </strong> {request.age}
+                    </Typography>
+                    <Typography>
+                      <strong>Contact No.: </strong> {request.contact}
+                    </Typography>
+                  </Container>
+                </AccordionDetails>
+              </Accordion>
+            );
+          })}
         </div>
       </CardContent>
       <CardActions>
