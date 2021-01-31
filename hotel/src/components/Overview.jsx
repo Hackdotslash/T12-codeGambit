@@ -10,18 +10,20 @@ import { Grid } from "@material-ui/core";
 import RoomsCard from "./Cards/RoomsCard";
 import StaffCard from "./Cards/StaffCard";
 import RequestsCard from "./Cards/RequestsCard";
+import { useAuth } from "./context/AuthContext";
 
 const useStyles = makeStyles({});
 
 function Overview() {
   const classes = useStyles();
+  const { currentUser } = useAuth();
 
   return (
     <Dashboard>
       <Grid>
         <Grid container spacing={5}>
           <Grid item xs>
-            <RoomsCard />
+            <RoomsCard currentUser={currentUser} />
           </Grid>
           <Grid item xs>
             <StaffCard />
