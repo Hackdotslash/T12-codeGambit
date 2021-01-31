@@ -12,21 +12,42 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   List hotelList;
-  String _city, _state;
+  String _city, _state = '';
   String cityName = '';
+  List temp = [];
   final _formKey = GlobalKey<FormState>();
+  int active;
+
+  void initState() {
+    getInit();
+    super.initState();
+  }
+
+  void getInit() async {
+    QuerySnapshot hotels =
+        await FirebaseFirestore.instance.collection('hotels').get();
+    setState(() {
+      hotelList = hotels.docs;
+    });
+  }
 
   void getHotels(String cityName) async {
     QuerySnapshot hotels =
         await FirebaseFirestore.instance.collection('hotels').get();
 
-    setState(() {
-      if (cityName == '') {
+    if (cityName == '') {
+      setState(() {
         hotelList = hotels.docs;
-      } else{
-        hotelList = hotels.docs.where((element) => element['city'] == cityName).toList();
-      }
-    });
+      });
+    } else {
+      QuerySnapshot hotels = await FirebaseFirestore.instance
+          .collection('hotels')
+          .where('city', isEqualTo: cityName)
+          .get();
+      setState(() {
+        hotelList = hotels.docs;
+      });
+    }
   }
 
   @override
@@ -36,7 +57,9 @@ class _SearchScreenState extends State<SearchScreen> {
     if (response.statusCode == 200) {
       String data = response.body;
       var decodedData = jsonDecode(data);
-      print(decodedData[state]['districtData'][city]['active']);
+      setState(() {
+        active = decodedData[state]['districtData'][city]['active'];
+      });
     }
   }
 
@@ -70,6 +93,9 @@ class _SearchScreenState extends State<SearchScreen> {
                     return null;
                   },
                 ),
+                SizedBox(
+                  height: 5.0,
+                ),
                 TextFormField(
                   decoration: InputDecoration(
                     hintText: 'Enter city',
@@ -98,19 +124,46 @@ class _SearchScreenState extends State<SearchScreen> {
                     color: Colors.red,
                   ),
                 ),
-                hotelList == null
-                    ? Text('No results')
-                    : ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: hotelList.length,
-                        itemBuilder: (context, index) {
-                          return Card(
-                            child: ListTile(
-                              title: Text(hotelList[index]['name']),
+                _city == null
+                    ? SizedBox(height: 0)
+                    : Card(
+                        child: ListTile(
+                          title: Text(
+                            'Active Cases: ' + active.toString(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
                             ),
-                          );
-                        },
+                          ),
+                          trailing: Text(_city),
+                        ),
+                      ),
+                SizedBox(
+                  height: 5.0,
+                ),
+                Text(
+                  'Hotels',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  height: 5.0,
+                ),
+                hotelList == null
+                    ? SizedBox(height: 0)
+                    : Expanded(
+                        child: ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: hotelList.length,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              child: ListTile(
+                                title: Text(hotelList[index]['name']),
+                              ),
+                            );
+                          },
+                        ),
                       ),
               ],
             ),
