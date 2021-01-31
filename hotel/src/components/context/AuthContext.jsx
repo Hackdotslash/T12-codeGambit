@@ -13,12 +13,15 @@ export function AuthProvider({ children }) {
 
     const [loading, setloading] = useState(true);
 
-    function signup(email, password, name, gstn) {
+    function signup(email, password, name, city, pincode, phone, gstn) {
         auth
             .createUserWithEmailAndPassword(email, password)
             .then((cred) => {
                 return db.collection("hotels").doc(cred.user.uid).set({
                     name: name,
+                    city: city,
+                    pincode: pincode,
+                    phone: phone,
                     gstn: gstn,
                 });
             })

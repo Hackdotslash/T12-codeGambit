@@ -6,6 +6,8 @@ import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
+import LocationCityIcon from '@material-ui/icons/LocationCity';
+import CallIcon from '@material-ui/icons/Call';
 
 import { useAuth } from "./context/AuthContext";
 import bk from "./images/bk1.png";
@@ -65,6 +67,9 @@ export default function Signup(props) {
   const password = useRef();
   const name = useRef();
   const gstn = useRef();
+  const city = useRef();
+  const pincode = useRef();
+  const phnNum = useRef();
   const { signup } = useAuth();
   const [busy, setBusy] = React.useState(false);
   const [error, seterror] = React.useState("");
@@ -74,7 +79,7 @@ export default function Signup(props) {
     try {
       seterror("");
       setBusy(true);
-      signup(email.current.value, password.current.value, name.current.value, gstn.current.value);
+      signup(email.current.value, password.current.value, name.current.value, city.current.value, pincode.current.value, phnNum.current.value, gstn.current.value);
       props.history.push("/signin");
     } catch (err) {
       seterror(err);
@@ -101,6 +106,48 @@ export default function Signup(props) {
                 startAdornment: (
                   <InputAdornment position="start">
                     <AccountCircleIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                id="Name"
+                label="City"
+                inputRef={city}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <LocationCityIcon />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                id="Name"
+                label="Pincode"
+                inputRef={pincode}
+                style={{ marginLeft: '5px' }}
+              />
+            </div>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="Name"
+              label="Contact Number"
+              inputRef={phnNum}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <CallIcon />
                   </InputAdornment>
                 ),
               }}

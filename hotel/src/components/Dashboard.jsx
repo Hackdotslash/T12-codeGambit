@@ -73,17 +73,19 @@ function Dashboard({ children, location: { pathname } }) {
     }
   };
   useEffect(() => {
-    db.collection('hotels').doc(currentUser.uid).get().then(doc => {
-      setUserData(doc.data());
-    })
-  }, [currentUser])
+    if (currentUser !== null) {
+      db.collection('hotels').doc(currentUser.uid).get().then(doc => {
+        setUserData(doc.data());
+      })
+    }
+  }, [currentUser]);
   return (
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar className={classes.header}>
           <Typography variant="h6">
-            Bon Voyage
+            E-Mulyankan
           </Typography>
           <NotificationsIcon />
         </Toolbar>
@@ -109,7 +111,7 @@ function Dashboard({ children, location: { pathname } }) {
             </ListItemAvatar>
             <ListItemText>
               <Typography variant="subtitle1" align="center" gutterBottom>{userData.name}</Typography>
-              <Typography variant="subtitle2" align="center">{userData.gstn}</Typography>
+              <Typography variant="subtitle2" align="center">R.N.G. Patel Institute of Technology</Typography>
             </ListItemText>
           </ListItem>
         </List>
@@ -119,9 +121,9 @@ function Dashboard({ children, location: { pathname } }) {
             <DashboardIcon />
             <Typography variant="subtitle1" style={{ marginLeft: '15px' }}>Overview</Typography>
           </MenuItem>
-          <MenuItem component={Link} to="/admin/dashboard/test/create" style={currentTab(pathname, "/admin/dashboard/test/create")}>
+          <MenuItem component={Link} to="/dashboard/profile" style={currentTab(pathname, "/dashboard/profile")}>
             <AddBoxIcon />
-            <Typography variant="subtitle1" style={{ marginLeft: '15px' }}>Create Test</Typography>
+            <Typography variant="subtitle1" style={{ marginLeft: '15px' }}>Update Profile</Typography>
           </MenuItem>
           <MenuItem component={Link} to="/admin/dashboard/test/edit" style={currentTab(pathname, "/admin/dashboard/test/edit")}>
             <EditIcon />
