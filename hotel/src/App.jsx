@@ -5,6 +5,7 @@ import Signin from './components/Signin';
 import { AuthProvider } from "./components/context/AuthContext";
 import './App.css';
 import Overview from './components/Overview';
+import Profile from './components/Profile';
 
 function App() {
   return (
@@ -14,7 +15,8 @@ function App() {
           <Switch>
             <Route path="/signup" component={Signup} />
             <Route path="/signin" component={Signin} />
-            <Route path="/dashboard/overview" component={Overview} />
+            <Route path="/dashboard/overview" exact component={Overview} />
+            <Route path="/dashboard/profile" exact component={Profile} />
           </Switch>
         </AuthProvider>
       </Router>
