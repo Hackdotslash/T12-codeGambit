@@ -7,7 +7,7 @@ class WelcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Welcome!!'),
+        title: Text('Welcome to BonVoyage!!'),
       ),
       body: Center(
         child: Column(

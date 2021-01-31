@@ -1,9 +1,13 @@
 import 'dart:collection';
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:user_app/main.dart';
+import 'package:user_app/screens/authenticate/welcome.dart';
+import 'package:user_app/screens/booking/rooms.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -17,6 +21,15 @@ class _SearchScreenState extends State<SearchScreen> {
   List temp = [];
   final _formKey = GlobalKey<FormState>();
   int active;
+
+  Future<void> _signOut() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyApp()));
+    } catch (e) {
+      print(e.message);
+    }
+  }
 
   void initState() {
     getInit();
@@ -70,6 +83,17 @@ class _SearchScreenState extends State<SearchScreen> {
         appBar: AppBar(
           title: Text('BonVoyage'),
           automaticallyImplyLeading: false,
+          actions: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(0),
+              child: FlatButton(
+                onPressed: () {
+                  _signOut();
+                },
+                child: Text('LOGOUT'),
+              ),
+            ),
+          ],
         ),
         body: Form(
           key: _formKey,
@@ -157,9 +181,14 @@ class _SearchScreenState extends State<SearchScreen> {
                           shrinkWrap: true,
                           itemCount: hotelList.length,
                           itemBuilder: (context, index) {
-                            return Card(
-                              child: ListTile(
-                                title: Text(hotelList[index]['name']),
+                            return FlatButton(
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => RoomScreen(id: hotelList[index])));
+                              },
+                              child: Card(
+                                child: ListTile(
+                                  title: Text(hotelList[index]['name']),
+                                ),
                               ),
                             );
                           },
